@@ -23,14 +23,12 @@ def test_predict_endpoint_success(image_path: str, expected_digit: int):
         pytest.skip(f"Test image {image_path} not found")
 
     base64_str = image_to_base64(path)
-    
-    payload = {
-        "image_base64": base64_str
-    }
-    
+
+    payload = {"image_base64": base64_str}
+
     response = client.post("/predict", json=payload)
     assert response.status_code == 200, f"Error: {response.text}"
-    
+
     data = response.json()
     assert "prediction" in data
     assert data["prediction"] == expected_digit

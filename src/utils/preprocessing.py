@@ -1,9 +1,9 @@
-from os import PathLike
-
-import torch
 import base64
-import numpy as np
+from os import PathLike
 from pathlib import Path
+
+import numpy as np
+import torch
 from PIL import Image, ImageFilter, ImageOps
 
 from src.data.augmentation import test_transforms
@@ -31,7 +31,7 @@ def preprocess_handwritten_image_with_transformation(
     """Load a handwritten digit image from disk and return an inference tensor."""
     img = Image.open(image_path).convert("L")
     transform = test_transforms()
-    return transform(preprocess_handwritten_image(img)).unsqueeze(0)
+    return transform(preprocess_handwritten_image(img)).unsqueeze(0)  # type: ignore[no-any-return]
 
 
 def preprocess_handwritten_image(img: Image.Image) -> Image.Image:

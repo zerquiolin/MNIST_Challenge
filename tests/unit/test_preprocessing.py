@@ -1,11 +1,11 @@
 import base64
 from pathlib import Path
 
+import numpy as np
 import pytest
+from PIL import Image
 
 from src.utils.preprocessing import image_to_base64, preprocess_handwritten_image
-from PIL import Image
-import numpy as np
 
 
 def test_image_to_base64_success(tmp_path: Path):

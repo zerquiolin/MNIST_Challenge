@@ -9,6 +9,7 @@ artifacts
 
 # Ignore chache
 __pycache__/
+.mypy_cache/
 
 # Ignore pytest generated files
 .coverage

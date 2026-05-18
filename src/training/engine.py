@@ -1,8 +1,9 @@
-import torch
 import numpy as np
+import torch
 from numpy.typing import NDArray
-from src.utils.lib.schema import TrainHistory
 from tqdm import tqdm
+
+from src.utils.lib.schema import TrainHistory
 
 
 def train_epoch(
@@ -35,9 +36,7 @@ def train_epoch(
         optimizer.step()
 
         # Metrics
-        running_loss += loss.item() * X.size(
-            0
-        )  # Loss mean * X size (remove the partial average)
+        running_loss += loss.item() * X.size(0)  # Loss mean * X size (remove the partial average)
         predicted = output.argmax(dim=1)
 
         correct += (predicted == y).sum().item()

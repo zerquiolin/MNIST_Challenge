@@ -70,9 +70,7 @@ def load_validated_image(image_bytes: bytes) -> Image.Image:
 
         with Image.open(BytesIO(image_bytes)) as image:
             if image.format not in ALLOWED_IMAGE_FORMATS:
-                raise ValueError(
-                    "Unsupported image format. Allowed formats: BMP, JPEG, PNG, WEBP."
-                )
+                raise ValueError("Unsupported image format. Allowed formats: BMP, JPEG, PNG, WEBP.")
 
             width, height = image.size
             if width < MIN_IMAGE_DIMENSION or height < MIN_IMAGE_DIMENSION:
@@ -119,4 +117,4 @@ def process_base64_image(image_base64: str) -> torch.Tensor:
     image = load_validated_image(image_bytes)
     processed_image = preprocess_handwritten_image(image)
     tensor = test_transforms()(processed_image)
-    return tensor.unsqueeze(0)
+    return tensor.unsqueeze(0)  # type: ignore[no-any-return]

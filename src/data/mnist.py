@@ -1,7 +1,7 @@
 import os
 
 import torch
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torchvision import datasets
 
 from src.data.augmentation import test_transforms, train_transforms
@@ -58,17 +58,12 @@ def load_mnist_dataloaders(
     train_size = len(training_dataset) - val_size
 
     # Split train/val dataset
-    train_subset, validation_subset = random_split(
-        dataset=range(len(training_dataset)),
-        lengths=[train_size, val_size],
-        generator=generator,
-    )
-    train_dataset = torch.utils.data.Subset(
-        training_dataset, indices=train_subset.indices
-    )
-    validation_dataset = torch.utils.data.Subset(
-        training_dataset_validation, indices=validation_subset.indices
-    )
+    indices = torch.randperm(len(training_dataset), generator=generator).tolist()
+    train_indices = indices[:train_size]
+    val_indices = indices[train_size:]
+
+    train_dataset = torch.utils.data.Subset(training_dataset, indices=train_indices)
+    validation_dataset = torch.utils.data.Subset(training_dataset_validation, indices=val_indices)
 
     # Loaders
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)

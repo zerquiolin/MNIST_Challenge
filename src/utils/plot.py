@@ -44,9 +44,7 @@ def plot_confusion_matrix(
     """Plot a confusion matrix for predicted and true labels."""
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(10, 8))
-    sns.heatmap(
-        cm, annot=True, fmt="d", cmap="Blues", xticklabels=classes, yticklabels=classes
-    )
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=classes, yticklabels=classes)
     plt.title("Confusion Matrix")
     plt.ylabel("True Label")
     plt.xlabel("Predicted Label")
@@ -81,9 +79,7 @@ def plot_predictions(
 
         color = "green" if true_label == pred_label else "red"
 
-        ax.set_title(
-            f"True: {true_label} | Pred: {pred_label}", color=color, fontsize=11
-        )
+        ax.set_title(f"True: {true_label} | Pred: {pred_label}", color=color, fontsize=11)
 
     plt.tight_layout()
     plt.show()

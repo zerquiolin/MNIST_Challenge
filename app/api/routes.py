@@ -45,6 +45,4 @@ async def predict(payload: PredictRequest) -> PredictResponse:
         ) from e
     except Exception as e:
         logger.exception("Unexpected inference error")
-        raise HTTPException(
-            status_code=500, detail="Unexpected error during prediction."
-        ) from e
+        raise HTTPException(status_code=500, detail="Unexpected error during prediction.") from e

@@ -74,7 +74,7 @@ def test_load_validated_image_unsupported_format():
     buffer = BytesIO()
     img.save(buffer, format="TIFF")
     img_bytes = buffer.getvalue()
-    
+
     with pytest.raises(ValueError, match="Unsupported image format"):
         load_validated_image(img_bytes)
 

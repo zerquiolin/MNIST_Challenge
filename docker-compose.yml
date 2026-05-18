@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .
+    image: mnist-classifier
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_PATH: /app/artifacts/mnist_classifier.pt

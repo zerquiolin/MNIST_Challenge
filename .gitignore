@@ -13,3 +13,6 @@ __pycache__/
 
 # Ignore pytest generated files
 .coverage
+
+# Ignore virtual environment
+venv/

@@ -1,0 +1,11 @@
+# Ignore secrets
+.env
+
+# Ignore generated models
+artifacts
+
+# Ignore downloaded dataset
+/notebooks/data/
+
+# Ignore chache
+__pycache__/

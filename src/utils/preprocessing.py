@@ -1,10 +1,28 @@
 from os import PathLike
 
-import numpy as np
 import torch
+import base64
+import numpy as np
+from pathlib import Path
 from PIL import Image, ImageFilter, ImageOps
 
 from src.data.augmentation import test_transforms
+
+
+def image_to_base64(image_path: str | Path) -> str:
+    """Read an image file and return its base64 string."""
+    image_path = Path(image_path)
+
+    if not image_path.exists():
+        raise FileNotFoundError(f"Image file not found: {image_path}")
+
+    if not image_path.is_file():
+        raise ValueError(f"Path is not a file: {image_path}")
+
+    with image_path.open("rb") as image_file:
+        encoded_bytes = base64.b64encode(image_file.read())
+
+    return encoded_bytes.decode("utf-8")
 
 
 def preprocess_handwritten_image_with_transformation(

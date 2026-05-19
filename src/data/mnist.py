@@ -70,11 +70,20 @@ def load_mnist_dataloaders(
     val_loader = DataLoader(validation_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
+    # Percentages
+    total_size = len(training_dataset) + len(test_dataset)
+    train_percentage = (len(train_dataset) / total_size) * 100
+    val_percentage = (len(validation_dataset) / total_size) * 100
+    test_percentage = (len(test_dataset) / total_size) * 100
+
     # Metadata
     metadata = {
         "train_size": train_size,
+        "train_percentage": f"{train_percentage:.2f}%",
         "test_size": len(test_dataset),
+        "test_percentage": f"{test_percentage:.2f}%",
         "validation_size": val_size,
+        "validation_percentage": f"{val_percentage:.2f}%",
         "classes": training_dataset.classes,
     }
 

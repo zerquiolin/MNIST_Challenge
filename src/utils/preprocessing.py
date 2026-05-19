@@ -26,12 +26,15 @@ def image_to_base64(image_path: str | Path) -> str:
 
 
 def preprocess_handwritten_image_with_transformation(
-    image_path: str | PathLike[str],
+    image_path: str | PathLike[str], unsqueeze: bool = True
 ) -> torch.Tensor:
     """Load a handwritten digit image from disk and return an inference tensor."""
     img = Image.open(image_path).convert("L")
     transform = test_transforms()
-    return transform(preprocess_handwritten_image(img)).unsqueeze(0)  # type: ignore[no-any-return]
+    if unsqueeze:
+        return transform(preprocess_handwritten_image(img)).unsqueeze(0)  # type: ignore[no-any-return]
+
+    return transform(preprocess_handwritten_image(img))  # type: ignore[no-any-return]
 
 
 def preprocess_handwritten_image(img: Image.Image) -> Image.Image:

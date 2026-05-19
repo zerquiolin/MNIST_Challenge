@@ -153,14 +153,15 @@ def test_model(
     model: torch.nn.Module,
     test_dataloader: torch.utils.data.DataLoader,
     device: torch.device,
-) -> tuple[NDArray[np.int64], NDArray[np.int64], torch.Tensor]:
-    """Return test labels, predictions, and images for reporting utilities."""
+) -> tuple[NDArray[np.int64], NDArray[np.int64], torch.Tensor, NDArray[np.float32]]:
+    """Return test labels, predictions, images, and class probabilities."""
     model.eval()
 
     # Metadata
     preds = []
     labels = []
     images = []
+    probabilities = []
 
     with torch.inference_mode():
         for X, y in test_dataloader:
@@ -169,14 +170,16 @@ def test_model(
 
             # Predictions
             output = model(X)
+            probability = torch.softmax(output, dim=1)
             predicted = output.argmax(dim=1)
 
             # Extend Metadata
             preds.extend(predicted.cpu().numpy())
             labels.extend(y.cpu().numpy())
             images.extend(X.cpu())
+            probabilities.extend(probability.cpu().numpy())
 
     if not images:
         raise ValueError("Test dataloader is empty.")
 
-    return np.array(labels), np.array(preds), torch.cat(images)
+    return np.array(labels), np.array(preds), torch.cat(images), np.array(probabilities)

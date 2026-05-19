@@ -147,6 +147,27 @@ The Docker image does not train the model during build. Generate the artifact be
 
 The fastest path is `make model`, which uses the lightweight model generation module. You can also generate or refine the model through experimentation in `notebooks/challenge.ipynb` or `notebooks/challenge_es.ipynb`, then export the resulting weights to the same artifact path.
 
+### Model Artifact Helpers
+
+The `make model` command automatically exports the trained model artifact, so no manual save step is needed for the standard workflow.
+
+For custom training or experimentation code, `src/utils/model_loader.py` provides small helper functions to save and load PyTorch model weights:
+
+```python
+import torch
+
+from src.models.mnist_cnn import MNISTCNN
+from src.utils.model_loader import load_model, save_model
+
+model = MNISTCNN()
+
+# Save weights to artifacts/MNISTCNN.pt
+save_model(model, "artifacts")
+
+# Load weights back into the same architecture
+model = load_model(MNISTCNN, "artifacts/MNISTCNN.pt")
+```
+
 ## Running the API Locally
 
 Start the FastAPI service:

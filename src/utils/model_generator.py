@@ -19,7 +19,9 @@ def generate_model(
     learning_rate: float = 0.001,
 ) -> Path:
     """Train the MNIST classifier and save its weights to `output_path`."""
-    train_loader, eval_loader, _, _ = load_mnist_dataloaders(batch_size=batch_size)
+    train_loader, eval_loader, _, _ = load_mnist_dataloaders(
+        data_dir=PROJECT_ROOT / "notebooks" / "data", batch_size=batch_size
+    )
     model = MNISTCNN()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = torch.nn.CrossEntropyLoss()
